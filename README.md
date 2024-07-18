@@ -25,44 +25,44 @@ For system versions 180521 and above, when the parameter file sets _flagSoftRst=
 In any working mode of the control card (except file mode), sending 0X05 via the serial port can query the current working mode of the control card. The return values can be 0X10, 0X12, 0X13, 0X14, or 0X15.
 
 ##### `0X10`: Enter Idle Mode
-When the control card is in idle mode (0X10), it remains in idle mode.
+When the control card is in idle mode (`0X10`), it remains in idle mode.
 
-- In file mode, it takes effect after the file operation command is completed and 0X10 is sent.
-- In homing mode, it takes effect after the robot stops moving (send 0X30) and 0X10 is sent.
-- In run mode, it takes effect after the robot stops moving (send 0X30) and 0X10 is sent.
+- In file mode, it takes effect after the file operation command is completed and `0X10` is sent.
+- In homing mode, it takes effect after the robot stops moving (send `0X30`) and `0X10` is sent.
+- In run mode, it takes effect after the robot stops moving (send `0X30`) and 0X10 is sent.
 - In reset mode, it exits to idle mode after the reset is completed. It starts up in idle mode.
 
 ##### `0X11`: Enter File Mode
-To download and execute a file, select the file and click "Send File" after sending 0X11. The first line of the file:
+To download and execute a file, select the file and click `Send File` after sending `0X11`. The first line of the file:
 
-"wr=ST" is a run file;
+| Command    | Description                              |
+|------------|------------------------------------------|
+| `wr=ST`    | Run file                                  |
+| `WR=INI`   | Parameter file                            |
+| `WR=oq`    | Zero return file                          |
+| `WR=T_0`   | Default run file (equivalent to `wr=ST`)  |
+| `WR=T_1`   | Run 1 file                                |
+| `WR=T_2`   | Run 2 file                                |
+| ...        | ...                                       |
+| `WR=T_120` | Run 120 file                              |
 
-"WR=INI" is a parameter file;
-
-"WR=oq" is a zero return file;
-
-"WR=T_0" is the default run file, equivalent to "wr=ST";
-
-"WR=T_1" is run 1 file;
-
-"WR=T_2" is run 2 file;
-...
-"WR=T_120" is run 120 file;
 
 The second line is the file name; 
-the third line is the file length, the size of the file excluding the first three lines.
 
-To read the run file after sending `0X11`, send "WR=R,##" ("##" is the length of the read content) to receive the run file.
+the third line is the file length, 
+the size of the file excluding the first three lines.
 
-To read the parameter file after sending `0X11`, send "WR=P,##" ("##" is the length of the read content) to receive the parameter file.
+To read the run file after sending `0X11`, send `WR=R,##` (`##` is the length of the read content) to receive the run file.
 
-To read the zero return file after sending `0X11`, send "WR=Q,##" ("##" is the length of the read content) to receive the zero return file.
+To read the parameter file after sending `0X11`, send `WR=P,##` (`##` is the length of the read content) to receive the parameter file.
 
-To read the run 0 file after sending `0X11`, send "WR=H_0,##" ("##" is the length of the read content) to receive the run 0 file.
+To read the zero return file after sending `0X11`, send `WR=Q,##` (`##` is the length of the read content) to receive the zero return file.
 
-To read the run 1 file after sending `0X11`, send "WR=H_1,##" ("##" is the length of the read content) to receive the run 1 file.
+To read the run 0 file after sending `0X11`, send `WR=H_0,##` (`##` is the length of the read content) to receive the run 0 file.
+
+To read the run 1 file after sending `0X11`, send `WR=H_1,##` (`##` is the length of the read content) to receive the run 1 file.
 ...
-To read the run 120 file after sending `0X11`, send "WR=H_120,##" ("##" is the length of the read content) to receive the run 120 file.
+To read the run 120 file after sending `0X11`, send `WR=H_120,##` (`##` is the length of the read content) to receive the run 120 file.
 
 ##### `0X12`: Motor Homing Mode
 After entering homing mode, the system automatically runs the contents of the file and commands sent via the serial port in real time. Pause is 0X30, continue is 0X12, and exit is 0X10.
@@ -79,39 +79,39 @@ Send 0X05 for query mode.
 
 Send 0X10 to exit mode.
 
-Send "0" to stop and send machine axis angles.
+Send `0` to stop and send machine axis angles.
 
-Send "SVON=1" to enable servo.
+Send `SVON=1` to enable servo.
 
-Send "SVON=0" to disable servo.
+Send `SVON=0` to disable servo.
 
-Send "SVBM=1" to release servo brake.
+Send `SVBM=1` to release servo brake.
 
-Send "SVBM=0" to engage servo brake.
+Send `SVBM=0` to engage servo brake.
 
-Send "CLR=ST_PUL" to clear position on the control card.
+Send `CLR=ST_PUL` to clear position on the control card.
 
-Send "CLR=SV_ALM" to clear drive alarms.
+Send `CLR=SV_ALM` to clear drive alarms.
 
-Send "J#+" to move axis # in positive direction (# = 1, 2, 3, 4, 5, 6).
+Send `J#+` to move axis # in positive direction (# = 1, 2, 3, 4, 5, 6).
 
-Send "J#-" to move axis # in negative direction.
+Send `J#-` to move axis # in negative direction.
 
-Send "J#0" to stop axis # motion.
+Send `J#0` to stop axis # motion.
 
-Send "J#<" to repeat motion for axis # (@ 0° to -90°).
+Send `J#<` to repeat motion for axis # (@ 0° to -90°).
 
-Send "J#>" to repeat motion for axis # (@ 0° to 90°).
+Send `J#>` to repeat motion for axis # (@ 0° to 90°).
 
-Send "P VE=####" to change running speed to #### pulses per second.
+Send `P VE=####` to change running speed to #### pulses per second.
 
-Send "P AC=####" to change acceleration to #### pulses per square second.
+Send `P AC=####` to change acceleration to #### pulses per square second.
 
-Send "P DE=####" to change deceleration to #### pulses per square second.
+Send `P DE=####` to change deceleration to #### pulses per square second.
 
-Send "G00 J#=####,...." to move robot joints to specified angles.
+Send `G00 J#=####,....` to move robot joints to specified angles.
 
-Send "G07 **=####" to change specified robot parameters.
+Send `G07 **=####` to change specified robot parameters.
 
 TX+: Cartesian coordinate X+;
 
@@ -148,11 +148,11 @@ Return the machine to the zero position.
 
 ### 2. Button Control Instructions
 
-- On startup, pressing the "Start" button puts the robot into run mode.
+- On startup, pressing the `Start` button puts the robot into run mode.
 - In run mode:
-  - While the robot is running, pressing the "Stop" button pauses the robot.
-  - When the robot is stopped, pressing the "Start" button resumes its operation.
-  - When the robot is stopped, holding down the "Stop" button and then pressing the "Start" button will reset the robot and exit to idle mode.
+  - While the robot is running, pressing the `Stop` button pauses the robot.
+  - When the robot is stopped, pressing the `Start` button resumes its operation.
+  - When the robot is stopped, holding down the `Stop` button and then pressing the `Start` button will reset the robot and exit to idle mode.
 
 ## Instruction details:
 ```
@@ -259,29 +259,35 @@ G08 EXIT Exit running and enter idle mode *************170817*************
 ```
 G09 Command:
 G09 COPYRIGHT Ask system YN
-G09 COM2=XXXX COM2 port sends XXXX characters
+G09 COM2=XXXX //COM2 port sends XXXX characters
 Example: G09 COM2=G00 J1=10 J2=10 J3=-90 J4=0 J5=0 J6=0
-This controller sends commands to another controller COM1,
-G09 COM2 10H Serial port 2 sends 0X10
-G09 COM2 12H Serial port 2 sends 0X12
-G09 COM2 13H Serial port 2 sends 0X13
-G09 COM2 14H Serial port 2 sends 0X14
-G09 COM2 15H Serial port 2 sends 0X15
-G09 COM2 18H Serial port 2 sends 0X18
-G09 ENC.... Special instruction for connecting with absolute value servo motors, refer to the homing file example;
+//This controller sends commands to another controller COM1,
+G09 COM2 10H //Serial port 2 sends 0X10
+G09 COM2 12H //Serial port 2 sends 0X12
+G09 COM2 13H //Serial port 2 sends 0X13
+G09 COM2 14H //Serial port 2 sends 0X14
+G09 COM2 15H //Serial port 2 sends 0X15
+G09 COM2 18H //Serial port 2 sends 0X18
+G09 ENC.... //Special instruction for connecting with absolute value servo motors, refer to the homing file example;
 ```
+
+### G09 COM2 Command Description
+
+- `G09 COM2=XXXX` Send commands to another controller (for example 485) 
+  
+  Example: `G09 COM2=G00 J1=10 J2=10 J3=-90 J4=0 J5=0 J6=0`
+
+- **Serial Port Communication:**
+  - `G09 COM2 10H`: Sends `0X10` via Serial port 2.
+  - `G09 COM2 12H`: Sends `0X12` via Serial port 2.
+  - `G09 COM2 13H`: Sends `0X13` via Serial port 2.
+  - `G09 COM2 14H`: Sends `0X14` via Serial port 2.
+  - `G09 COM2 15H`: Sends `0X15` via Serial port 2.
+  - `G09 COM2 18H`: Sends `0X18` via Serial port 2.
+
+- **Special Instructions:** `G09 ENC....` is a special instruction for connecting with absolute value servo motors. Refer to the homing file example for detailed usage.
+
 ```
-G09 COM2=XXXX COM2 port sends XXXX characters
-For example: G09 COM2=G00 J1=10 J2=10 J3=-90 J4=0 J5=0 J6=0
-This controller sends commands to another controller COM1,
-G09 COM2 10H Serial port 2 sends 0X10
-G09 COM2 12H Serial port 2 sends 0X12
-G09 COM2 13H Serial port 2 sends 0X13
-G09 COM2 14H Serial port 2 sends 0X14
-G09 COM2 15H Serial port 2 sends 0X15
-G09 COM2 18H Serial port 2 sends 0X18
-G09 ENC.... Special instruction for connecting with absolute value servo motors, refer to the homing file example;
-//===============================================================
 VXX: Unit
 #XX: Immediate value
 User operation unit V0-V127, V400-V511
